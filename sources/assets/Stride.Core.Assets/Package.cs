@@ -596,7 +596,8 @@ namespace Stride.Core.Assets
 
         public static PackageContainer LoadProject(ILogger log, string filePath)
         {
-            if (Path.GetExtension(filePath).ToLowerInvariant() == ".csproj")
+            var supportedLanguageProjectFileExtensions = SupportedLanguage.SupportedLanguages.Select(x => x.Extension).ToList();
+            if (supportedLanguageProjectFileExtensions.Contains(Path.GetExtension(filePath).ToLowerInvariant()))
             {
                 var projectPath = filePath;
                 var packagePath = Path.ChangeExtension(filePath, Package.PackageFileExtension);

@@ -136,7 +136,10 @@ namespace Stride.Assets.Presentation.Templates
                     var outputFileDirectory = outputFile.GetParent();
 
                     // Determine if we are processing the main game project
-                    var isPackageFile = (projectOutputFile == null && Path.GetExtension(file.FullName).ToLowerInvariant() == ".csproj" && !Path.GetFileNameWithoutExtension(file.FullName).EndsWith(".Windows"));
+                    var supportedLanguageProjectFileExtensions = SupportedLanguage.SupportedLanguages.Select(x => x.Extension).ToList();
+                    var isPackageFile = (projectOutputFile == null 
+                        && supportedLanguageProjectFileExtensions.Contains(Path.GetExtension(file.FullName).ToLowerInvariant() 
+                        && !Path.GetFileNameWithoutExtension(file.FullName).EndsWith(".Windows"));
 
                     if (isPackageFile)
                     {

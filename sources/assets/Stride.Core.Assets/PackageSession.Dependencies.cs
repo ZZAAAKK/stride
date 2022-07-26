@@ -39,6 +39,8 @@ namespace Stride.Core.Assets
             var pendingPackageUpgrades = new List<PendingPackageUpgrade>();
             pendingPackageUpgradesPerPackage.Add(package, pendingPackageUpgrades);
 
+            var supportedLanguageProjectFileExtensions = SupportedLanguage.SupportedLanguages.Select(x => x.Extension).ToList();
+
             // Load some informations about the project
             try
             {
@@ -258,7 +260,8 @@ namespace Stride.Core.Assets
                     switch (projectDependency.Type)
                     {
                         case DependencyType.Project:
-                            if (Path.GetExtension(projectDependency.MSBuildProject).ToLowerInvariant() == ".csproj")
+                            var fileExtension = Path.GetExtension(projectDependency.MSBuildProject).ToLowerInvariant();
+                            if (supportedLanguageProjectFileExtensions.Contains(fileExtension))
                                 file = UPath.Combine(project.FullPath.GetFullDirectory(), (UFile)projectDependency.MSBuildProject);
                             break;
                         case DependencyType.Package:
